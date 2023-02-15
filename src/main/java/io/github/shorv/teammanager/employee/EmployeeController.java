@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,8 +20,12 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping
-    public List<Employee> getEmployees() {
-        return employeeService.getEmployees();
+    public List<Employee> getEmployees(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
+        if (page == null || size == null) {
+            return employeeService.getEmployees();
+        }
+
+        return employeeService.getPaginatedEmployees(page, size);
     }
 
     @GetMapping("{employeeId}")
