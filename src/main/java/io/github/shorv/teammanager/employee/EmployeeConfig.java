@@ -18,21 +18,25 @@ public class EmployeeConfig {
     @Bean
     CommandLineRunner commandLineRunner(EmployeeRepository employeeRepository) {
         return args -> {
-            Faker faker = new Faker(Locale.ENGLISH);
-
-            List<Employee> employees = new ArrayList<>();
-            for (int i = 0; i < 15; i++) {
-                employees.add(new Employee(
-                        faker.name().firstName(),
-                        faker.name().lastName(),
-                        faker.internet().emailAddress(),
-                        new Random().nextInt(41) + 20,
-                        faker.color().name(),
-                        Set.of(Technology.SPRING_BOOT)
-                ));
-            }
-
-            employeeRepository.saveAll(employees);
+            List<Employee> fakeEmployees = createFakeEmployees(25);
+            employeeRepository.saveAll(fakeEmployees);
         };
+    }
+
+    private List<Employee> createFakeEmployees(int amount) {
+        Faker faker = new Faker(Locale.ENGLISH);
+        List<Employee> employees = new ArrayList<>();
+        for (int i = 0; i < amount; i++) {
+            employees.add(new Employee(
+                    faker.name().firstName(),
+                    faker.name().lastName(),
+                    faker.internet().emailAddress(),
+                    new Random().nextInt(41) + 20,
+                    faker.color().name(),
+                    Set.of(Technology.SPRING_BOOT)
+            ));
+        }
+
+        return employees;
     }
 }
