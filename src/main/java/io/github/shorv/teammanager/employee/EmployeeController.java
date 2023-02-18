@@ -21,12 +21,12 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping
-    public List<Employee> getEmployees(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
-        if (page == null || size == null) {
-            return employeeService.getEmployees();
-        }
+    public List<Employee> getEmployees(@RequestParam(value = "page", required = false) Integer page,
+                                       @RequestParam(value = "size", required = false) Integer size,
+                                       @RequestParam(value = "sortDir", required = false) String sortDir,
+                                       @RequestParam(value = "sortField", required = false) String sortField) {
 
-        return employeeService.getPaginatedEmployees(page, size);
+        return employeeService.getEmployees(page, size, sortDir, sortField);
     }
 
     @GetMapping("{employeeId}")
@@ -41,7 +41,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("{employeeId}")
-    public void deleteEmployeeById(@PathVariable("employeeId") Long employeeId){
+    public void deleteEmployeeById(@PathVariable("employeeId") Long employeeId) {
         employeeService.deleteEmployeeById(employeeId);
     }
 }
