@@ -27,10 +27,8 @@ public class EmployeeConfig {
                         faker.name().lastName(),
                         faker.internet().emailAddress(),
                         new Random().nextInt(41) + 20,
-                        new Random().nextInt(5000) + 3000,
                         faker.color().name(),
-                        Set.of(Technology.SPRING_BOOT),
-                        new Random().nextInt(60) + 1
+                        Set.of(Technology.SPRING_BOOT)
                 ));
             }
 

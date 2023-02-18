@@ -2,6 +2,7 @@ package io.github.shorv.teammanager.employee;
 
 import io.github.shorv.teammanager.employee.exception.EmployeeNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,5 +38,10 @@ public class EmployeeController {
     @PostMapping
     public void addNewEmployee(@RequestBody Employee employee) {
         employeeService.addNewEmployee(employee);
+    }
+
+    @DeleteMapping("{employeeId}")
+    public void deleteEmployeeById(@PathVariable("employeeId") Long employeeId){
+        employeeService.deleteEmployeeById(employeeId);
     }
 }

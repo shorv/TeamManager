@@ -29,21 +29,17 @@ public class Employee {
     private String lastName;
     private String email;
     private int age;
-    private int salary;
     private String team;
     @ElementCollection
     @Enumerated(EnumType.STRING)
     private Set<Technology> techStack;
-    private int monthsOfExperience;
 
-    public Employee(String firstName, String lastName, String email, int age, int salary, String team, Set<Technology> techStack, int monthsOfExperience) {
+    public Employee(String firstName, String lastName, String email, int age, String team, Set<Technology> techStack) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.age = age;
-        this.salary = salary;
         this.team = team;
         this.techStack = techStack;
-        this.monthsOfExperience = monthsOfExperience;
     }
 }
