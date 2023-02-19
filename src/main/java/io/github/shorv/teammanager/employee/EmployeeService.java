@@ -31,15 +31,18 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployees(Integer page, Integer size, String sortDirection, String sortField) {
-        if (page == null || size == null) {
-            if (sortDirection == null || sortField == null) {
+        boolean pageable = !(page == null || size == null);
+        boolean sortable = !(sortDirection == null || sortField == null);
+
+        if (!pageable) {
+            if (!sortable) {
                 return getAllEmployees();
             }
 
             return getSortedEmployees(sortDirection, sortField);
         }
 
-        if (sortDirection == null || sortField == null) {
+        if (!sortable) {
             return getPaginatedEmployees(page, size);
         }
 
