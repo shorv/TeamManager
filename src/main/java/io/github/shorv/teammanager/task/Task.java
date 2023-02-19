@@ -34,8 +34,7 @@ public class Task {
     private LocalDateTime createdAt;
     private String comments;
 
-    public Task(Long id, LocalDateTime deadline, String description, TaskPriority priority, String team, LocalDateTime createdAt, String comments) {
-        this.id = id;
+    public Task(LocalDateTime deadline, String description, TaskPriority priority, String team, LocalDateTime createdAt, String comments) {
         this.deadline = deadline;
         this.description = description;
         this.priority = priority;
