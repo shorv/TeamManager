@@ -2,6 +2,7 @@ package io.github.shorv.teammanager.employee;
 
 import io.github.shorv.teammanager.employee.exception.EmployeeNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -42,7 +46,12 @@ public class EmployeeController {
     @PostMapping
     public ResponseEntity<Employee> addNewEmployee(@RequestBody Employee employee) {
         employeeService.addNewEmployee(employee);
-        return ResponseEntity.status(HttpStatus.CREATED)
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(employee.getId())
+                .toUri();
+
+        return ResponseEntity.created(uri)
                 .body(employee);
     }
 
