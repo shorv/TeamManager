@@ -25,9 +25,9 @@ public class TeamController {
     @GetMapping
     public ResponseEntity<List<Team>> getTeams(@RequestParam(value = "page", required = false) Integer page,
                                                @RequestParam(value = "size", required = false) Integer size,
-                                               @RequestParam(value = "sortDir", required = false) String sortDir,
-                                               @RequestParam(value = "sortField", required = false) String sortField) {
-        return ResponseEntity.ok(teamService.getTeams(page, size, sortDir, sortField));
+                                               @RequestParam(value = "sort", required = false) String sortDir,
+                                               @RequestParam(value = "orderBy", required = false) String orderBy) {
+        return ResponseEntity.ok(teamService.getTeams(page, size, sortDir, orderBy));
     }
 
     @GetMapping("{teamId}")

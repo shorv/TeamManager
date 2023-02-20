@@ -26,9 +26,9 @@ public class EmployeeController {
     @GetMapping
     public ResponseEntity<List<Employee>> getEmployees(@RequestParam(value = "page", required = false) Integer page,
                                                        @RequestParam(value = "size", required = false) Integer size,
-                                                       @RequestParam(value = "sortDir", required = false) String sortDir,
-                                                       @RequestParam(value = "sortField", required = false) String sortField) {
-        return ResponseEntity.ok(employeeService.getEmployees(page, size, sortDir, sortField));
+                                                       @RequestParam(value = "sort", required = false) String sortDir,
+                                                       @RequestParam(value = "orderBy", required = false) String orderBy) {
+        return ResponseEntity.ok(employeeService.getEmployees(page, size, sortDir, orderBy));
     }
 
     @GetMapping("{employeeId}")

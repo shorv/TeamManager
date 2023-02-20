@@ -26,9 +26,9 @@ public class TaskController {
     @GetMapping
     public ResponseEntity<List<Task>> getTasks(@RequestParam(value = "page", required = false) Integer page,
                                                @RequestParam(value = "size", required = false) Integer size,
-                                               @RequestParam(value = "sortDir", required = false) String sortDir,
-                                               @RequestParam(value = "sortField", required = false) String sortField) {
-        return ResponseEntity.ok(taskService.getTasks(page, size, sortDir, sortField));
+                                               @RequestParam(value = "sort", required = false) String sortDir,
+                                               @RequestParam(value = "orderBy", required = false) String orderBy) {
+        return ResponseEntity.ok(taskService.getTasks(page, size, sortDir, orderBy));
     }
 
     @GetMapping("{taskId}")

@@ -2,7 +2,6 @@ package io.github.shorv.teammanager.team;
 
 import io.github.shorv.teammanager.employee.Employee;
 import io.github.shorv.teammanager.task.Task;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,7 +26,6 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
     private String name;
 
     @OneToMany(mappedBy = "team")
