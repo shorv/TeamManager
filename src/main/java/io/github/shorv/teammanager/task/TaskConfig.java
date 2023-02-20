@@ -15,7 +15,6 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class TaskConfig {
 
-
     @Bean
     CommandLineRunner taskCommandLineRunner(TaskRepository taskRepository) {
         return args -> {
@@ -34,7 +33,6 @@ public class TaskConfig {
                     faker.date().future(30, TimeUnit.DAYS).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
                     fakeTask,
                     TaskPriority.MEDIUM,
-                    faker.color().name(),
                     LocalDateTime.now(),
                     ""
             ));

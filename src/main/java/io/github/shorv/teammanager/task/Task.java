@@ -1,17 +1,22 @@
 package io.github.shorv.teammanager.task;
 
 import io.github.shorv.teammanager.employee.Employee;
+import io.github.shorv.teammanager.team.Team;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Set;
 
 @Entity
@@ -30,16 +35,27 @@ public class Task {
 
     @ManyToMany(mappedBy = "tasks")
     private Set<Employee> employees;
-    private String team;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
+    private Team team;
     private LocalDateTime createdAt;
     private String comments;
 
-    public Task(LocalDateTime deadline, String description, TaskPriority priority, String team, LocalDateTime createdAt, String comments) {
+    public Task(LocalDateTime deadline, String description, TaskPriority priority, LocalDateTime createdAt, String comments) {
         this.deadline = deadline;
         this.description = description;
         this.priority = priority;
-        this.team = team;
+        this.employees = Collections.emptySet();
         this.createdAt = createdAt;
         this.comments = comments;
+    }
+
+    public void changeTeam(Team team) {
+        if (this.team != null) {
+            this.team.getTasks().remove(this);
+        }
+
+        this.team = team;
+        this.team.getTasks().add(this);
     }
 }

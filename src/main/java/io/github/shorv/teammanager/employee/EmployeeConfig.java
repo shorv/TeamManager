@@ -32,7 +32,6 @@ public class EmployeeConfig {
                     faker.name().lastName(),
                     faker.internet().emailAddress(),
                     new Random().nextInt(41) + 20,
-                    faker.color().name(),
                     Set.of(Technology.SPRING_BOOT)
             ));
         }
