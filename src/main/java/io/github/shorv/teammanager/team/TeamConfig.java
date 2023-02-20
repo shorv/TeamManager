@@ -25,10 +25,22 @@ public class TeamConfig {
         Faker faker = new Faker(Locale.ENGLISH);
         List<Team> teams = new ArrayList<>();
 
-        for (int i = 0; i < amount; i++) {
-            teams.add(new Team(faker.color().name()));
+        int i = 0;
+        while(i < amount){
+            String fakeName = faker.color().name();
+            if(teamExists(teams, fakeName)){
+                continue;
+            }
+
+            teams.add(new Team(fakeName));
+            i++;
         }
 
         return teams;
+    }
+
+    boolean teamExists(List<Team> teams, String name){
+        return teams.stream()
+                .anyMatch(team -> team.getName().equals(name));
     }
 }
