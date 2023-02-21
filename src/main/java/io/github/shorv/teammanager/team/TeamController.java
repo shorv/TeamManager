@@ -1,6 +1,5 @@
 package io.github.shorv.teammanager.team;
 
-import io.github.shorv.teammanager.team.exception.TeamNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,10 +30,8 @@ public class TeamController {
     }
 
     @GetMapping("{teamId}")
-    public ResponseEntity<Team> getTeamById(@PathVariable("teamId") Long teamId) throws TeamNotFoundException {
-        return teamService.getTeamById(teamId)
-                .map(ResponseEntity::ok)
-                .orElseThrow(TeamNotFoundException::new);
+    public ResponseEntity<Team> getTeamById(@PathVariable("teamId") Long teamId) {
+        return ResponseEntity.ok(teamService.getTeamById(teamId));
     }
 
     @PostMapping

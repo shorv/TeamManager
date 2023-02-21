@@ -1,12 +1,12 @@
 package io.github.shorv.teammanager.task;
 
+import io.github.shorv.teammanager.task.exception.TaskNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -49,8 +49,9 @@ public class TaskService {
         return getSortedAndPaginatedTasks(page, size, sortDirection, sortField);
     }
 
-    public Optional<Task> getTaskById(Long taskId) {
-        return taskRepository.findById(taskId);
+    public Task getTaskById(Long taskId) {
+        return taskRepository.findById(taskId)
+                .orElseThrow(TaskNotFoundException::new);
     }
 
     public void addNewTask(Task task) {

@@ -1,6 +1,5 @@
 package io.github.shorv.teammanager.employee;
 
-import io.github.shorv.teammanager.employee.exception.EmployeeNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,10 +31,8 @@ public class EmployeeController {
     }
 
     @GetMapping("{employeeId}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable("employeeId") Long employeeId) throws EmployeeNotFoundException {
-        return employeeService.getEmployeeById(employeeId)
-                .map(ResponseEntity::ok)
-                .orElseThrow(EmployeeNotFoundException::new);
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable("employeeId") Long employeeId) {
+        return ResponseEntity.ok(employeeService.getEmployeeById(employeeId));
     }
 
     @PostMapping

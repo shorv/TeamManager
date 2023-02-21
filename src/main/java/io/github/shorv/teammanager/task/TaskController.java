@@ -1,6 +1,5 @@
 package io.github.shorv.teammanager.task;
 
-import io.github.shorv.teammanager.task.exception.TaskNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,10 +31,8 @@ public class TaskController {
     }
 
     @GetMapping("{taskId}")
-    public ResponseEntity<Task> getTaskById(@PathVariable("taskId") Long taskId) throws TaskNotFoundException{
-        return taskService.getTaskById(taskId)
-                .map(ResponseEntity::ok)
-                .orElseThrow(TaskNotFoundException::new);
+    public ResponseEntity<Task> getTaskById(@PathVariable("taskId") Long taskId) {
+        return ResponseEntity.ok(taskService.getTaskById(taskId));
     }
 
     @PostMapping

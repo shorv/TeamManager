@@ -1,12 +1,12 @@
 package io.github.shorv.teammanager.team;
 
+import io.github.shorv.teammanager.team.exception.TeamNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -49,8 +49,9 @@ public class TeamService {
         return getSortedAndPaginatedTeams(page, size, sortDirection, sortField);
     }
 
-    public Optional<Team> getTeamById(Long teamId) {
-        return teamRepository.findById(teamId);
+    public Team getTeamById(Long teamId) {
+        return teamRepository.findById(teamId)
+                .orElseThrow(TeamNotFoundException::new);
     }
 
     public void addNewTeam(Team team) {

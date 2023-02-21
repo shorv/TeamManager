@@ -1,12 +1,12 @@
 package io.github.shorv.teammanager.employee;
 
+import io.github.shorv.teammanager.employee.exception.EmployeeNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -50,8 +50,9 @@ public class EmployeeService {
         return getSortedAndPaginatedEmployees(page, size, sortDirection, sortField);
     }
 
-    public Optional<Employee> getEmployeeById(Long employeeId) {
-        return employeeRepository.findById(employeeId);
+    public Employee getEmployeeById(Long employeeId) {
+        return employeeRepository.findById(employeeId)
+                .orElseThrow(EmployeeNotFoundException::new);
     }
 
     public void addNewEmployee(Employee employee) {
