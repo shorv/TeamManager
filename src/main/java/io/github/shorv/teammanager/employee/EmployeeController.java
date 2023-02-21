@@ -27,7 +27,7 @@ public class EmployeeController {
                                                        @RequestParam(value = "size", required = false) Integer size,
                                                        @RequestParam(value = "sort", required = false) String sortDir,
                                                        @RequestParam(value = "orderBy", required = false) String orderBy) {
-        return ResponseEntity.ok(employeeService.getEmployees(page, size, sortDir, orderBy));
+        return ResponseEntity.ok(employeeService.getAll(page, size, sortDir, orderBy));
     }
 
     @GetMapping("{employeeId}")

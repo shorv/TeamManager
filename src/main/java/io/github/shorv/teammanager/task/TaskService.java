@@ -1,52 +1,24 @@
 package io.github.shorv.teammanager.task;
 
+import io.github.shorv.teammanager.PageableAndSortableService;
 import io.github.shorv.teammanager.task.exception.TaskNotFoundException;
-import lombok.AllArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
-public class TaskService {
+public class TaskService extends PageableAndSortableService<Task, TaskRepository> {
+
     private final TaskRepository taskRepository;
 
-    private List<Task> getAllTasks() {
-        return taskRepository.findAll();
+    public TaskService(TaskRepository repository, TaskRepository taskRepository) {
+        super(repository);
+        this.taskRepository = taskRepository;
     }
 
-    private List<Task> getPaginatedTasks(int page, int size) {
-        return taskRepository.findAll(PageRequest.of(page, size)).getContent();
-    }
-
-    private List<Task> getSortedTasks(String sortDirection, String field) {
-        return taskRepository.findAll(Sort.by(Sort.Direction.fromString(sortDirection.toUpperCase()), field));
-    }
-
-    private List<Task> getSortedAndPaginatedTasks(int page, int size, String sortDirection, String field) {
-        return taskRepository.findAll(PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortDirection.toUpperCase()), field))).getContent();
-    }
-
-    public List<Task> getTasks(Integer page, Integer size, String sortDirection, String sortField) {
-        boolean pageable = !(page == null || size == null);
-        boolean sortable = !(sortDirection == null || sortField == null);
-
-        if (!pageable) {
-            if (!sortable) {
-                return getAllTasks();
-            }
-
-            return getSortedTasks(sortDirection, sortField);
-        }
-
-        if (!sortable) {
-            return getPaginatedTasks(page, size);
-        }
-
-
-        return getSortedAndPaginatedTasks(page, size, sortDirection, sortField);
+    @Override
+    public List<Task> getAll(Integer page, Integer size, String sortDirection, String sortField) {
+        return super.getAll(page, size, sortDirection, sortField);
     }
 
     public Task getTaskById(Long taskId) {
