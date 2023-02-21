@@ -1,52 +1,24 @@
 package io.github.shorv.teammanager.team;
 
+import io.github.shorv.teammanager.PageableAndSortableService;
 import io.github.shorv.teammanager.team.exception.TeamNotFoundException;
-import lombok.AllArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
-public class TeamService {
+public class TeamService extends PageableAndSortableService<Team, TeamRepository> {
+
     private final TeamRepository teamRepository;
 
-    private List<Team> getAllTeams() {
-        return teamRepository.findAll();
+    public TeamService(TeamRepository repository, TeamRepository teamRepository) {
+        super(repository);
+        this.teamRepository = teamRepository;
     }
 
-    private List<Team> getPaginatedTeams(int page, int size) {
-        return teamRepository.findAll(PageRequest.of(page, size)).getContent();
-    }
-
-    private List<Team> getSortedTeams(String sortDirection, String field) {
-        return teamRepository.findAll(Sort.by(Sort.Direction.fromString(sortDirection.toUpperCase()), field));
-    }
-
-    private List<Team> getSortedAndPaginatedTeams(int page, int size, String sortDirection, String field) {
-        return teamRepository.findAll(PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortDirection.toUpperCase()), field))).getContent();
-    }
-
-    public List<Team> getTeams(Integer page, Integer size, String sortDirection, String sortField) {
-        boolean pageable = !(page == null || size == null);
-        boolean sortable = !(sortDirection == null || sortField == null);
-
-        if (!pageable) {
-            if (!sortable) {
-                return getAllTeams();
-            }
-
-            return getSortedTeams(sortDirection, sortField);
-        }
-
-        if (!sortable) {
-            return getPaginatedTeams(page, size);
-        }
-
-
-        return getSortedAndPaginatedTeams(page, size, sortDirection, sortField);
+    @Override
+    public List<Team> getAll(Integer page, Integer size, String sortDirection, String sortField) {
+        return super.getAll(page, size, sortDirection, sortField);
     }
 
     public Team getTeamById(Long teamId) {
