@@ -38,6 +38,9 @@ public class Employee {
     private String email;
     private int age;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "organization_id")
+    private io.github.shorv.teammanager.organization.Organization organization;
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
     @ElementCollection
