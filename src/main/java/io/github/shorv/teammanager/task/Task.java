@@ -39,22 +39,19 @@ public class Task {
     @JoinColumn(name = "team_id")
     private Team team;
     private LocalDateTime createdAt;
-    private String comments;
 
-    public Task(LocalDateTime deadline, String description, TaskPriority priority, LocalDateTime createdAt, String comments) {
+    public Task(LocalDateTime deadline, String description, TaskPriority priority, LocalDateTime createdAt) {
         this.deadline = deadline;
         this.description = description;
         this.priority = priority;
         this.employees = Collections.emptySet();
         this.createdAt = createdAt;
-        this.comments = comments;
     }
 
     public void changeTeam(Team team) {
         if (this.team != null) {
             this.team.getTasks().remove(this);
         }
-
         this.team = team;
         this.team.getTasks().add(this);
     }

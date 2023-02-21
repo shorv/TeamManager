@@ -33,8 +33,7 @@ public class TaskConfig {
                     faker.date().future(30, TimeUnit.DAYS).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
                     fakeTask,
                     TaskPriority.MEDIUM,
-                    LocalDateTime.now(),
-                    ""
+                    LocalDateTime.now()
             ));
         }
 
