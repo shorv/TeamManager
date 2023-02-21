@@ -16,7 +16,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/team")
+@RequestMapping(path = "/api/v1/teams")
 @AllArgsConstructor
 public class TeamController {
     private final TeamService teamService;

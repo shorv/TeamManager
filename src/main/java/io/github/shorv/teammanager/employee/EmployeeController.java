@@ -16,7 +16,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/employee")
+@RequestMapping(path = "/api/v1/employees")
 @AllArgsConstructor
 public class EmployeeController {
 
