@@ -17,6 +17,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -44,7 +45,7 @@ public class Task {
         this.deadline = deadline;
         this.description = description;
         this.priority = priority;
-        this.employees = Collections.emptySet();
+        this.employees = new HashSet<>();
         this.createdAt = createdAt;
     }
 

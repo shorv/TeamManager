@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -41,8 +42,8 @@ public class Team {
 
     public Team(String name) {
         this.name = name;
-        this.tasks = Collections.emptySet();
-        this.employees = Collections.emptySet();
+        this.tasks = new HashSet<>();
+        this.employees = new HashSet<>();
     }
 
     public void addTask(Task task) {
