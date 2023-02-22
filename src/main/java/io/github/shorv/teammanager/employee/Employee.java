@@ -1,6 +1,8 @@
 package io.github.shorv.teammanager.employee;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.github.shorv.teammanager.Technology;
+import io.github.shorv.teammanager.organization.Organization;
 import io.github.shorv.teammanager.task.Task;
 import io.github.shorv.teammanager.team.Team;
 import jakarta.persistence.CascadeType;
@@ -39,7 +41,8 @@ public class Employee {
     private int age;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "organization_id")
-    private io.github.shorv.teammanager.organization.Organization organization;
+    @JsonBackReference
+    Organization organization;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;

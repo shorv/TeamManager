@@ -1,7 +1,9 @@
 package io.github.shorv.teammanager.organization;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.github.shorv.teammanager.employee.Employee;
 import io.github.shorv.teammanager.team.Team;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,14 +29,36 @@ public class Organization {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "organization")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)
     private Set<Team> teams;
-    @OneToMany(mappedBy = "organization")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)
     private Set<Employee> employees;
 
     public Organization(String name) {
         this.name = name;
         this.teams = new HashSet<>();
         this.employees = new HashSet<>();
+    }
+
+    public void addTeam(Team team) {
+        teams.add(team);
+        team.setOrganization(this);
+    }
+
+    public void removeTeam(Team team) {
+        teams.remove(team);
+        team.setOrganization(null);
+    }
+
+    public void addEmployee(Employee employee) {
+        employees.add(employee);
+        employee.setOrganization(this);
+    }
+
+    public void removeEmployee(Employee employee) {
+        employees.remove(employee);
+        employee.setOrganization(null);
     }
 }

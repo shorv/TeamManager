@@ -1,9 +1,10 @@
 package io.github.shorv.teammanager.team;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.github.shorv.teammanager.employee.Employee;
+import io.github.shorv.teammanager.organization.Organization;
 import io.github.shorv.teammanager.task.Task;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,7 +16,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,9 +32,10 @@ public class Team {
 
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "organization_id")
-    private io.github.shorv.teammanager.organization.Organization organization;
+    @JsonBackReference
+    private Organization organization;
     @OneToMany(mappedBy = "team")
     private Set<Task> tasks;
     @OneToMany(mappedBy = "team")
@@ -42,6 +43,7 @@ public class Team {
 
     public Team(String name) {
         this.name = name;
+        this.organization = null;
         this.tasks = new HashSet<>();
         this.employees = new HashSet<>();
     }
