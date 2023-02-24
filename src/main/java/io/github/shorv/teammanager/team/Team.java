@@ -1,6 +1,7 @@
 package io.github.shorv.teammanager.team;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.github.shorv.teammanager.employee.Employee;
 import io.github.shorv.teammanager.organization.Organization;
 import io.github.shorv.teammanager.task.Task;
@@ -37,8 +38,10 @@ public class Team {
     @JsonBackReference
     private Organization organization;
     @OneToMany(mappedBy = "team")
+    @JsonManagedReference
     private Set<Task> tasks;
     @OneToMany(mappedBy = "team")
+    @JsonManagedReference
     private Set<Employee> employees;
 
     public Team(String name) {

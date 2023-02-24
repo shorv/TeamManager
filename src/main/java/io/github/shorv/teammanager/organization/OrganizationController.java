@@ -2,7 +2,6 @@ package io.github.shorv.teammanager.organization;
 
 import io.github.shorv.teammanager.employee.Employee;
 import io.github.shorv.teammanager.team.Team;
-import io.github.shorv.teammanager.team.TeamRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,7 +25,6 @@ import java.util.Set;
 public class OrganizationController {
 
     private final OrganizationService organizationService;
-    private final TeamRepository teamRepository;
 
     @GetMapping
     public ResponseEntity<List<Organization>> getOrganizations(@RequestParam(value = "page", required = false) Integer page,
@@ -79,6 +77,20 @@ public class OrganizationController {
     public void removeTeamFromOrganizationById(@PathVariable("organizationId") Long organizationId,
                                                @RequestParam(value = "teamId") Long teamId) {
         organizationService.removeTeamFromOrganizationById(organizationId, teamId);
+    }
+
+    @PutMapping("{organizationId}/teams/{teamId}")
+    public void addEmployeeToTeam(@PathVariable("organizationId") Long organizationId,
+                                  @PathVariable("teamId") Long teamId,
+                                  @RequestParam(value = "employeeId") Long employeeId) {
+        organizationService.addEmployeeToTeam(organizationId, teamId, employeeId);
+    }
+
+    @DeleteMapping("{organizationId}/teams/{teamId}")
+    public void removeEmployeeFromTeam(@PathVariable("organizationId") Long organizationId,
+                                       @PathVariable("teamId") Long teamId,
+                                       @RequestParam(value = "employeeId") Long employeeId) {
+        organizationService.removeEmployeeFromTeam(organizationId, teamId, employeeId);
     }
 
     @PutMapping("{organizationId}/employees")

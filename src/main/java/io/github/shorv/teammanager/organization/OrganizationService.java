@@ -3,9 +3,11 @@ package io.github.shorv.teammanager.organization;
 import io.github.shorv.teammanager.PageableAndSortableService;
 import io.github.shorv.teammanager.employee.Employee;
 import io.github.shorv.teammanager.employee.EmployeeService;
+import io.github.shorv.teammanager.employee.exception.EmployeeNotFoundException;
 import io.github.shorv.teammanager.organization.exception.OrganizationNotFoundException;
 import io.github.shorv.teammanager.team.Team;
 import io.github.shorv.teammanager.team.TeamService;
+import io.github.shorv.teammanager.team.exception.TeamNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -85,6 +87,40 @@ public class OrganizationService extends PageableAndSortableService<Organization
         Employee employee = employeeService.getEmployeeById(employeeId);
 
         organization.removeEmployee(employee);
+        organizationRepository.save(organization);
+    }
+
+    public Employee getEmployeeFromOrganization(Organization organization, Long employeeId){
+        return organization.getEmployees()
+                .stream()
+                .filter(employee -> employee.getId().equals(employeeId))
+                .findFirst()
+                .orElseThrow(EmployeeNotFoundException::new);
+    }
+
+    public Team getTeamFromOrganization(Organization organization, Long teamId){
+        return organization.getTeams()
+                .stream()
+                .filter(team -> team.getId().equals(teamId))
+                .findFirst()
+                .orElseThrow(TeamNotFoundException::new);
+    }
+
+    public void addEmployeeToTeam(Long organizationId, Long teamId, Long employeeId) {
+        Organization organization = getOrganizationById(organizationId);
+        Employee employee = getEmployeeFromOrganization(organization, employeeId);
+        Team team = getTeamFromOrganization(organization, teamId);
+
+        team.addEmployee(employee);
+        organizationRepository.save(organization);
+    }
+
+    public void removeEmployeeFromTeam(Long organizationId, Long teamId, Long employeeId) {
+        Organization organization = getOrganizationById(organizationId);
+        Employee employee = getEmployeeFromOrganization(organization, employeeId);
+        Team team = getTeamFromOrganization(organization, teamId);
+
+        team.removeEmployee(employee);
         organizationRepository.save(organization);
     }
 }

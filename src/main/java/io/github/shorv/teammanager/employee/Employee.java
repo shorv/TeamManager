@@ -45,6 +45,7 @@ public class Employee {
     Organization organization;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
+    @JsonBackReference
     private Team team;
     @ElementCollection
     @Enumerated(EnumType.STRING)

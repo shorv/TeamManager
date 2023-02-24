@@ -1,5 +1,6 @@
 package io.github.shorv.teammanager.task;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.github.shorv.teammanager.employee.Employee;
 import io.github.shorv.teammanager.team.Team;
 import jakarta.persistence.Entity;
@@ -38,6 +39,7 @@ public class Task {
     private Set<Employee> employees;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
+    @JsonBackReference
     private Team team;
     private LocalDateTime createdAt;
 
