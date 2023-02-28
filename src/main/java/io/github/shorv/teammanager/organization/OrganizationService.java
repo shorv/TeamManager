@@ -5,6 +5,8 @@ import io.github.shorv.teammanager.employee.Employee;
 import io.github.shorv.teammanager.employee.EmployeeService;
 import io.github.shorv.teammanager.employee.exception.EmployeeNotFoundException;
 import io.github.shorv.teammanager.organization.exception.OrganizationNotFoundException;
+import io.github.shorv.teammanager.task.Task;
+import io.github.shorv.teammanager.task.TaskService;
 import io.github.shorv.teammanager.team.Team;
 import io.github.shorv.teammanager.team.TeamService;
 import io.github.shorv.teammanager.team.exception.TeamNotFoundException;
@@ -19,15 +21,18 @@ public class OrganizationService extends PageableAndSortableService<Organization
     private final OrganizationRepository organizationRepository;
     private final TeamService teamService;
     private final EmployeeService employeeService;
+    private final TaskService taskService;
 
     public OrganizationService(OrganizationRepository repository,
                                OrganizationRepository organizationRepository,
                                TeamService teamService,
-                               EmployeeService employeeService) {
+                               EmployeeService employeeService,
+                               TaskService taskService) {
         super(repository);
         this.organizationRepository = organizationRepository;
         this.teamService = teamService;
         this.employeeService = employeeService;
+        this.taskService = taskService;
     }
 
     @Override
@@ -90,7 +95,7 @@ public class OrganizationService extends PageableAndSortableService<Organization
         organizationRepository.save(organization);
     }
 
-    public Employee getEmployeeFromOrganization(Organization organization, Long employeeId){
+    public Employee getEmployeeFromOrganization(Organization organization, Long employeeId) {
         return organization.getEmployees()
                 .stream()
                 .filter(employee -> employee.getId().equals(employeeId))
@@ -98,7 +103,7 @@ public class OrganizationService extends PageableAndSortableService<Organization
                 .orElseThrow(EmployeeNotFoundException::new);
     }
 
-    public Team getTeamFromOrganization(Organization organization, Long teamId){
+    public Team getTeamFromOrganization(Organization organization, Long teamId) {
         return organization.getTeams()
                 .stream()
                 .filter(team -> team.getId().equals(teamId))
@@ -121,6 +126,27 @@ public class OrganizationService extends PageableAndSortableService<Organization
         Team team = getTeamFromOrganization(organization, teamId);
 
         team.removeEmployee(employee);
+        organizationRepository.save(organization);
+    }
+
+    public void addNewTaskById(Long organizationId, Long taskId) {
+        Organization organization = getOrganizationById(organizationId);
+        Task task = taskService.getTaskById(taskId);
+
+        organization.addTask(task);
+        organizationRepository.save(organization);
+    }
+
+    public Set<Task> getOrganizationTasks(Long organizationId) {
+        Organization organization = getOrganizationById(organizationId);
+        return organization.getTasks();
+    }
+
+    public void removeTaskFromOrganizationById(Long organizationId, Long taskId) {
+        Organization organization = getOrganizationById(organizationId);
+        Task task = taskService.getTaskById(taskId);
+
+        organization.removeTask(task);
         organizationRepository.save(organization);
     }
 }

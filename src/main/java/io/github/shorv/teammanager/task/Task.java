@@ -2,6 +2,7 @@ package io.github.shorv.teammanager.task;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.github.shorv.teammanager.employee.Employee;
+import io.github.shorv.teammanager.organization.Organization;
 import io.github.shorv.teammanager.team.Team;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,7 +18,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,6 +42,10 @@ public class Task {
     @JsonBackReference
     private Team team;
     private LocalDateTime createdAt;
+    @ManyToOne
+    @JoinColumn(name = "organization_id")
+    @JsonBackReference
+    private Organization organization;
 
     public Task(LocalDateTime deadline, String description, TaskPriority priority, LocalDateTime createdAt) {
         this.deadline = deadline;
