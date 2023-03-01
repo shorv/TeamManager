@@ -18,6 +18,6 @@ You will see more possibilities in the [API Endpoints](https://github.com/shorv/
 
 ## 📈 Entity Relation Diagram
 
-<img src="https://i.imgur.com/bfoz0YQ.png" width="1000" height="725" />
+<img src="https://i.imgur.com/bfoz0YQ.png" width="1000" height="748" />
 
 # API Endpoints
