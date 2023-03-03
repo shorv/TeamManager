@@ -10,7 +10,7 @@ You will see more possibilities in the [API Endpoints](https://github.com/shorv/
 - [shorv](https://github.com/shorv)
 
 ## 💻 TechStack
-- Spring Boot (JPA, JDBC, Mail, Security, Web)
+- Spring (Boot, JPA, JDBC, Mail, Security, Web)
 - Hibernate
 - MySQL
 - Lombok
